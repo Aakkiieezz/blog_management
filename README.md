@@ -11,6 +11,7 @@ Database - in MySQL Workbench
 ## VSCode
 Extensions installed :
 - Spring Boot Extension Pack
+- Lombok Annotations Support for VS Code
 
 Steps through command pallete (Ctrl+Shift+p) :
 - Spring Initializr: Create a Maven Project
@@ -24,5 +25,5 @@ Steps through command pallete (Ctrl+Shift+p) :
   - Spring Boot DevTools
   - Spring Data JPA
   - MySQL Driver
-  - Lombok
   - Spring Web
+  - Lombok (modified - included latest version)
