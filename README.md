@@ -26,4 +26,5 @@ Steps through command pallete (Ctrl+Shift+p) :
   - Spring Data JPA
   - MySQL Driver
   - Spring Web
+  - Validation
   - Lombok (modified - included latest version)
