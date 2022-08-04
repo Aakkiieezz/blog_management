@@ -2,6 +2,7 @@ package blog.blog_management.controller;
 
 import java.util.List;
 import java.util.Map;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,12 @@ import blog.blog_management.service.UserService;
 public class UserController
 {
     @Autowired
-    private UserService service;
+    private UserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<?> createUser(@RequestBody User userNew)
+    public ResponseEntity<?> createUser(@Valid @RequestBody User userNew)
     {
-        User user = service.createUser(userNew);
+        User user = userService.createUser(userNew);
         String msg = "User "+user.getId()+" created successfully";
         return new ResponseEntity<>(Map.of("Message", msg, "Data", user), HttpStatus.CREATED);
     }
@@ -34,28 +35,30 @@ public class UserController
     @GetMapping("/{id}")
     public User getUser(@PathVariable int id)
     {
-        return service.getUser(id);
+        User user = userService.getUser(id);
+        return user;
     }
 
     @GetMapping("/")
     public List<User> getUsers()
     {
-        return service.getUsers();
+        List<User> users = userService.getUsers();
+        return users;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@RequestBody User userNew, @PathVariable int id)
+    public ResponseEntity<?> updateUser(@Valid @RequestBody User userNew, @PathVariable int id)
     {
-        User user = service.updateUser(userNew, id);
+        User user = userService.updateUser(userNew, id);
         String msg = "User "+id+" updated successfully";
-        return new ResponseEntity<>(Map.of("Message", msg, "Data", user), HttpStatus.CREATED);
+        return new ResponseEntity<>(Map.of("Message", msg, "Data", user), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable int id)
     {
-        User user = service.deleteUser(id);
+        User user = userService.deleteUser(id);
         String msg = "User "+id+" deleted successfully";
-        return new ResponseEntity<>(Map.of("Message", msg, "Data", user), HttpStatus.CREATED);
+        return new ResponseEntity<>(Map.of("Message", msg, "Data", user), HttpStatus.OK);
     }
 }

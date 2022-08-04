@@ -11,40 +11,40 @@ import blog.blog_management.repository.UserRepository;
 public class UserService
 {
     @Autowired
-    private UserRepository repo;
+    private UserRepository userRepo;
 
     public User createUser(User user)
     {
-        repo.save(user);
+        userRepo.save(user);
         return user;
     }
 
     public User updateUser(User userNew, int id)
     {
-        User user = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
+        User user = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
         user.setName(userNew.getName());
         user.setEmail(userNew.getEmail());
         user.setPassword(userNew.getPassword());
-        repo.save(user);
+        userRepo.save(user);
         return user;
     }
 
     public User getUser(int id)
     {
-        User user = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
+        User user = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
         return user;
     }
 
     public List<User> getUsers()
     {
-        List<User> users = repo.findAll();
+        List<User> users = userRepo.findAll();
         return users;
     }
 
     public User deleteUser(int id)
     {
-        User user = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
-        repo.delete(user);
+        User user = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
+        userRepo.delete(user);
         return user;
     }
 }
