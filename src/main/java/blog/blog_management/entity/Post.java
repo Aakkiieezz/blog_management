@@ -29,10 +29,10 @@ public class Post
     private String content;
     @Column(name = "date")
     private Date date;
-    @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
     @ManyToOne
+    private User user;
     @JoinColumn(name = "category_id", nullable = false)
+    @ManyToOne
     private Category category;
 }

@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler
 {
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> notFound(ResourceNotFoundException ex)
+    public ResponseEntity<String> notFound(ResourceNotFoundException e)
     {
-        String msg = ex.getMessage();
+        String msg = e.getMessage();
         return new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> wrongNamea(MethodArgumentNotValidException exe)
+    public ResponseEntity<Map<String, String>> wrongNamea(MethodArgumentNotValidException e)
     {
-        Map<String, String> wrongName = new HashMap<>();
-        exe.getBindingResult().getAllErrors().forEach((error) ->
+        Map<String, String> msg = new HashMap<>();
+        e.getBindingResult().getAllErrors().forEach((error) ->
         {
             String fieldName = ((FieldError) error).getField();
             String message = error.getDefaultMessage();
-            wrongName.put(fieldName, message);
+            msg.put(fieldName, message);
         });
-        return new ResponseEntity<Map<String, String>>(wrongName, HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<Map<String, String>>(msg, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }
