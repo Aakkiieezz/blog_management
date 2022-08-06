@@ -6,6 +6,14 @@ Used :
 - CRUD Functionality
 
 ## Screenshots of demo
+
+ER Diagram
+![Screenshot_20220729_151348](https://user-images.githubusercontent.com/67866166/183232229-c80b5a2c-f129-4fe2-8fd1-818f236d9675.png)
+
+All Api's
+
+![ref - all api's](https://user-images.githubusercontent.com/67866166/183232231-c62b4784-e124-4c44-88fc-701872513672.png)
+
 Database - in MySQL Workbench
 
 ## VSCode
