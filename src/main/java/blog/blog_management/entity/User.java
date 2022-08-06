@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -17,7 +18,9 @@ public class User
 {
     @Column(name = "id")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UserSEQ")
+    @SequenceGenerator(name = "UserSEQ", sequenceName = "UserSEQ", initialValue = 1, allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "name")
     @NotBlank(message = "Cannot be empty or blank")

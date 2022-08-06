@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
@@ -19,7 +20,9 @@ public class Post
 {
     @Column(name = "id")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PostSEQ")
+    @SequenceGenerator(name = "PostSEQ", sequenceName = "PostSEQ", initialValue = 1, allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "title")
     @NotBlank(message = "Cannot be empty or blank")

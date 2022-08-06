@@ -47,7 +47,7 @@ public class PostService
 
     public List<Post> getPostsByCategory(int category_id)
     {
-        Category category = categoryRepo.findById(category_id).orElseThrow(() -> new ResourceNotFoundException("Post", "Id", category_id));
+        Category category = categoryRepo.findById(category_id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", category_id));
         List<Post> posts = postRepo.findByCategory(category);
         return posts;
     }
