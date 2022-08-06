@@ -19,14 +19,6 @@ public class CategoryService
         return category;
     }
 
-    public Category updateCategory(Category categoryNew, int id)
-    {
-        Category category = categoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", id));
-        category.setTitle(categoryNew.getTitle());
-        categoryRepo.save(category);
-        return category;
-    }
-
     public Category getCategory(int id)
     {
         Category category = categoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", id));
@@ -37,6 +29,14 @@ public class CategoryService
     {
         List<Category> categories = categoryRepo.findAll();
         return categories;
+    }
+
+    public Category updateCategory(Category categoryNew, int id)
+    {
+        Category category = categoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", id));
+        category.setTitle(categoryNew.getTitle());
+        categoryRepo.save(category);
+        return category;
     }
 
     public Category deleteCategory(int id)

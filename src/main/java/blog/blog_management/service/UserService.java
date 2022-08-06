@@ -19,16 +19,6 @@ public class UserService
         return user;
     }
 
-    public User updateUser(User userNew, int id)
-    {
-        User user = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
-        user.setName(userNew.getName());
-        user.setEmail(userNew.getEmail());
-        user.setPassword(userNew.getPassword());
-        userRepo.save(user);
-        return user;
-    }
-
     public User getUser(int id)
     {
         User user = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
@@ -39,6 +29,16 @@ public class UserService
     {
         List<User> users = userRepo.findAll();
         return users;
+    }
+
+    public User updateUser(User userNew, int id)
+    {
+        User user = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
+        user.setName(userNew.getName());
+        user.setEmail(userNew.getEmail());
+        user.setPassword(userNew.getPassword());
+        userRepo.save(user);
+        return user;
     }
 
     public User deleteUser(int id)
