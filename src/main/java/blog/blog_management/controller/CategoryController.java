@@ -29,7 +29,7 @@ public class CategoryController
     {
         Category category = categoryService.createCategory(categoryNew);
         String msg = "Category "+category.getId()+" created successfully";
-        return new ResponseEntity<>(Map.of("Message", msg, "Date", category), HttpStatus.CREATED);
+        return new ResponseEntity<>(Map.of("Message", msg, "Data", category), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
