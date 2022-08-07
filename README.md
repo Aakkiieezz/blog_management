@@ -1,9 +1,28 @@
 # Blogging backend using SpringBoot + Hibernate + MySQL
 
-Used :
-- Layered architecture (Controller <--> Service <--> Repository)
+Things implemented/used :
+- 3 Layer architecture (Controller <--> Service <--> Repository[DAO])
+- Api's for CRUD Operations (Create, Read, Update, Delete)
+- Api's for Login & Register
+- Api's for Pagination & Sorting
+- Role based authentication (diff access for admins & users)
+- Using DTO (for data transfer)
+- Validation Handling
+- Exception Handling (for proper error message to user)
+- Pagination
+- JWT based authentication
+
+Technologies/Tools used :
+- Spring Boot Java Framework
+- Maven Build Tool
+- Visual Studio Code IDE
+- Apache Tomcat (embedded web server in Spring)
+- Spring Core
+- Spring Security (JWT)
+- Spring Data JPA (Hibernate)
 - Mysql Workbench
-- CRUD Functionality
+- Postman Rest Client
+- Swagger
 
 ## Screenshots of demo
 
