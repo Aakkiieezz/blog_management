@@ -3,11 +3,16 @@ package blog.blog_management.service;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import blog.blog_management.entity.Category;
 import blog.blog_management.entity.Post;
 import blog.blog_management.entity.User;
 import blog.blog_management.exception.ResourceNotFoundException;
+import blog.blog_management.payload.PostResponse;
 import blog.blog_management.repository.CategoryRepository;
 import blog.blog_management.repository.PostRepository;
 import blog.blog_management.repository.UserRepository;
@@ -39,10 +44,24 @@ public class PostService
         return post;
     }
 
-    public List<Post> getPosts()
+    public PostResponse getPosts(int pageNumber, int pageSize, String sortBy, String sortDir)
     {
-        List<Post> posts = postRepo.findAll();
-        return posts;
+        Sort sort = null;
+        if(sortDir.equalsIgnoreCase("asc") || sortDir.equalsIgnoreCase("ascending"))
+            sort = Sort.by(sortBy).ascending();
+        else if(sortDir.equalsIgnoreCase("desc") || sortDir.equalsIgnoreCase("descending"))
+            sort = Sort.by(sortBy).descending();
+        Pageable page = PageRequest.of(pageNumber, pageSize, sort);
+        Page<Post> pagePost = postRepo.findAll(page);
+        List<Post> posts = pagePost.getContent();
+        PostResponse response = new PostResponse();
+        response.setContent(posts);
+        response.setPageNummber(pagePost.getNumber());
+        response.setPageSize(pagePost.getSize());
+        response.setTotalElements(pagePost.getNumberOfElements());
+        response.setTotalPages(pagePost.getTotalPages());
+        response.setLastPage(pagePost.isLast());
+        return response;
     }
 
     public List<Post> getPostsByCategory(int category_id)

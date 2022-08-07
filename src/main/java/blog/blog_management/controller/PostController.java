@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import blog.blog_management.entity.Post;
+import blog.blog_management.payload.PostResponse;
 import blog.blog_management.service.PostService;
 
 @RestController
@@ -40,10 +42,13 @@ public class PostController
     }
 
     @GetMapping("/posts/")
-    public List<Post> getPosts()
+    public PostResponse getPosts(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "title", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir)
     {
-        List<Post> posts = postService.getPosts();
-        return posts;
+        PostResponse response = postService.getPosts(pageNumber, pageSize, sortBy, sortDir);
+        return response;
     }
 
     @GetMapping("/users/{userId}/posts")
