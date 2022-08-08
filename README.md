@@ -6,7 +6,7 @@ Things implemented/used :
 - Api's for Login & Register
 - Api's for Pagination & Sorting
 - Role based authentication (diff access for admins & users)
-- Using DTO (for data transfer)
+- Using DTO's (for data transfer)
 - Validation Handling
 - Exception Handling (for proper error message to user)
 - Pagination
