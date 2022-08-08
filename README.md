@@ -27,7 +27,7 @@ Technologies/Tools used :
 ## Screenshots of demo
 
 ER Diagram
-![Screenshot_20220729_151348](https://user-images.githubusercontent.com/67866166/183232229-c80b5a2c-f129-4fe2-8fd1-818f236d9675.png)
+![Screenshot_20220808_224314](https://user-images.githubusercontent.com/67866166/183475453-9c79820f-602e-4757-bf1d-7de0d567e929.png)
 
 All Api's
 
