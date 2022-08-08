@@ -54,4 +54,5 @@ Steps through command pallete (Ctrl+Shift+p) :
   - MySQL Driver
   - Spring Web
   - Validation
-  - Lombok (modified - included latest version)
+  - Lombok (modified - included version 1.18.24)
+  - ModelMapper (added externally version 3.1.0)
