@@ -1,10 +1,13 @@
 package blog.blog_management.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import blog.blog_management.entity.Category;
 import blog.blog_management.exception.ResourceNotFoundException;
+import blog.blog_management.payload.CategoryDto;
+import blog.blog_management.payload.EntityDtoConversion;
 import blog.blog_management.repository.CategoryRepository;
 
 @Service
@@ -12,37 +15,45 @@ public class CategoryService
 {
     @Autowired
     private CategoryRepository categoryRepo;
+    @Autowired
+    private EntityDtoConversion converter;
 
-    public Category createCategory(Category category)
+    public CategoryDto createCategory(CategoryDto categoryDto)
     {
+        Category category = converter.dtoToCategory(categoryDto);
         categoryRepo.save(category);
-        return category;
+        categoryDto = converter.categoryToDto(category);
+        return categoryDto;
     }
 
-    public Category getCategory(int id)
+    public CategoryDto getCategory(int id)
     {
         Category category = categoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", id));
-        return category;
+        CategoryDto categoryDto = converter.categoryToDto(category);
+        return categoryDto;
     }
 
-    public List<Category> getCategories()
+    public List<CategoryDto> getCategories()
     {
         List<Category> categories = categoryRepo.findAll();
-        return categories;
+        List<CategoryDto> categoryDtos = categories.stream().map(category -> this.converter.categoryToDto(category)).collect(Collectors.toList());
+        return categoryDtos;
     }
 
-    public Category updateCategory(Category categoryNew, int id)
+    public CategoryDto updateCategory(CategoryDto categoryDto, int id)
     {
         Category category = categoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", id));
-        category.setTitle(categoryNew.getTitle());
+        categoryDto.setId(id);
+        category = converter.dtoToCategory(categoryDto);
         categoryRepo.save(category);
-        return category;
+        return categoryDto;
     }
 
-    public Category deleteCategory(int id)
+    public CategoryDto deleteCategory(int id)
     {
         Category category = categoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", id));
+        CategoryDto categoryDto = converter.categoryToDto(category);
         categoryRepo.delete(category);
-        return category;
+        return categoryDto;
     }
 }

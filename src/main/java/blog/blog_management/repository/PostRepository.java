@@ -10,9 +10,10 @@ import blog.blog_management.entity.User;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer>
 {
-    // Derived Query Method by Spring's data JPA repository
+    // Derived Query Methods by Spring's data JPA repository
     List<Post> findByUser(User user);
 
-    // Derived Query Method by Spring's data JPA repository
     List<Post> findByCategory(Category category);
+
+    List<Post> findByTitleContaining(String title);
 }

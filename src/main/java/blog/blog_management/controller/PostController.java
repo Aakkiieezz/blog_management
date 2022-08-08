@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import blog.blog_management.entity.Post;
+import blog.blog_management.config.AppConstants;
+import blog.blog_management.payload.PostDto;
 import blog.blog_management.payload.PostResponse;
 import blog.blog_management.service.PostService;
 
@@ -27,57 +28,64 @@ public class PostController
     private PostService postService;
 
     @PostMapping("/users/{userId}/categories/{categoryId}/posts/")
-    public ResponseEntity<?> createPost(@Valid @RequestBody Post postNew, @PathVariable int userId, @PathVariable int categoryId)
+    public ResponseEntity<?> createPost(@Valid @RequestBody PostDto postDtoNew, @PathVariable int userId, @PathVariable int categoryId)
     {
-        Post post = postService.createPost(postNew, userId, categoryId);
-        String msg = "Post "+post.getId()+" created successfully";
-        return new ResponseEntity<>(Map.of("Message", msg, "Data", post), HttpStatus.CREATED);
+        PostDto postDto = postService.createPost(postDtoNew, userId, categoryId);
+        String msg = "Post "+postDto.getId()+" created successfully";
+        return new ResponseEntity<>(Map.of("Message", msg, "Data", postDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/posts/{id}")
-    public Post getPost(@PathVariable int id)
+    public PostDto getPost(@PathVariable int id)
     {
-        Post post = postService.getPost(id);
-        return post;
+        PostDto postDto = postService.getPost(id);
+        return postDto;
     }
 
     @GetMapping("/posts/")
-    public PostResponse getPosts(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "title", required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir)
+    public PostResponse getPosts(@RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir)
     {
         PostResponse response = postService.getPosts(pageNumber, pageSize, sortBy, sortDir);
         return response;
     }
 
-    @GetMapping("/users/{userId}/posts")
-    public List<Post> getPostsByUser(@PathVariable int userId)
+    @GetMapping("/categories/{categoryId}/posts")
+    public List<PostDto> getPostsByCategory(@PathVariable int categoryId)
     {
-        List<Post> posts = postService.getPostsByUser(userId);
-        return posts;
+        List<PostDto> postDtos = postService.getPostsByCategory(categoryId);
+        return postDtos;
     }
 
-    @GetMapping("/categories/{categoryId}/posts")
-    public List<Post> getPostsByCategory(@PathVariable int categoryId)
+    @GetMapping("/users/{userId}/posts")
+    public List<PostDto> getPostsByUser(@PathVariable int userId)
     {
-        List<Post> posts = postService.getPostsByCategory(categoryId);
-        return posts;
+        List<PostDto> postDtos = postService.getPostsByUser(userId);
+        return postDtos;
+    }
+
+    @GetMapping("/posts/search/{keyword}")
+    public List<PostDto> getPostsByTitleSearch(@PathVariable String keyword)
+    {
+        List<PostDto> postDtos = postService.getPostsByTitleSearch(keyword);
+        return postDtos;
     }
 
     @PutMapping("/posts/{id}")
-    public ResponseEntity<?> updatePost(@Valid @RequestBody Post postNew, @PathVariable int id)
+    public ResponseEntity<?> updatePost(@Valid @RequestBody PostDto postDtoNew, @PathVariable int id)
     {
-        Post post = postService.updatePost(postNew, id);
+        PostDto postDto = postService.updatePost(postDtoNew, id);
         String msg = "Post "+id+" updated successfully";
-        return new ResponseEntity<>(Map.of("Message", msg, "Data", post), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("Message", msg, "Data", postDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/posts/{id}")
     public ResponseEntity<?> deletePost(@PathVariable int id)
     {
-        Post post = postService.deletePost(id);
+        PostDto postDto = postService.deletePost(id);
         String msg = "Post "+id+" deleted successfully";
-        return new ResponseEntity<>(Map.of("Message", msg, "Data", post), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("Message", msg, "Data", postDto), HttpStatus.OK);
     }
 }

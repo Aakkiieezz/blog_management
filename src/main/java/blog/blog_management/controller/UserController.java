@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import blog.blog_management.entity.User;
+import blog.blog_management.payload.UserDto;
 import blog.blog_management.service.UserService;
 
 @RestController
@@ -25,40 +25,40 @@ public class UserController
     private UserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<?> createUser(@Valid @RequestBody User userNew)
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDtoNew)
     {
-        User user = userService.createUser(userNew);
-        String msg = "User "+user.getId()+" created successfully";
-        return new ResponseEntity<>(Map.of("Message", msg, "Data", user), HttpStatus.CREATED);
+        UserDto userDto = userService.createUser(userDtoNew);
+        String msg = "User "+userDto.getId()+" created successfully";
+        return new ResponseEntity<>(Map.of("Message", msg, "Data", userDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable int id)
+    public UserDto getUser(@PathVariable int id)
     {
-        User user = userService.getUser(id);
-        return user;
+        UserDto userDto = userService.getUser(id);
+        return userDto;
     }
 
     @GetMapping("/")
-    public List<User> getUsers()
+    public List<UserDto> getUsers()
     {
-        List<User> users = userService.getUsers();
-        return users;
+        List<UserDto> userDtos = userService.getUsers();
+        return userDtos;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@Valid @RequestBody User userNew, @PathVariable int id)
+    public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto userDtoNew, @PathVariable int id)
     {
-        User user = userService.updateUser(userNew, id);
+        UserDto userDto = userService.updateUser(userDtoNew, id);
         String msg = "User "+id+" updated successfully";
-        return new ResponseEntity<>(Map.of("Message", msg, "Data", user), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("Message", msg, "Data", userDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable int id)
     {
-        User user = userService.deleteUser(id);
+        UserDto userDto = userService.deleteUser(id);
         String msg = "User "+id+" deleted successfully";
-        return new ResponseEntity<>(Map.of("Message", msg, "Data", user), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("Message", msg, "Data", userDto), HttpStatus.OK);
     }
 }

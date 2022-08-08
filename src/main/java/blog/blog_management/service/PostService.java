@@ -2,6 +2,7 @@ package blog.blog_management.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +13,8 @@ import blog.blog_management.entity.Category;
 import blog.blog_management.entity.Post;
 import blog.blog_management.entity.User;
 import blog.blog_management.exception.ResourceNotFoundException;
+import blog.blog_management.payload.EntityDtoConversion;
+import blog.blog_management.payload.PostDto;
 import blog.blog_management.payload.PostResponse;
 import blog.blog_management.repository.CategoryRepository;
 import blog.blog_management.repository.PostRepository;
@@ -26,22 +29,27 @@ public class PostService
     private UserRepository userRepo;
     @Autowired
     private CategoryRepository categoryRepo;
+    @Autowired
+    private EntityDtoConversion converter;
 
-    public Post createPost(Post post, int userId, int categoryId)
+    public PostDto createPost(PostDto postDto, int userId, int categoryId)
     {
         User user = this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
         Category category = this.categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", categoryId));
-        post.setDate(new Date());
-        post.setUser(user);
+        Post post = converter.dtoToPost(postDto);
         post.setCategory(category);
+        post.setUser(user);
+        post.setDate(new Date());
         postRepo.save(post);
-        return post;
+        postDto = converter.postToDto(post);
+        return postDto;
     }
 
-    public Post getPost(int id)
+    public PostDto getPost(int id)
     {
         Post post = postRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "Id", id));
-        return post;
+        PostDto postDto = converter.postToDto(post);
+        return postDto;
     }
 
     public PostResponse getPosts(int pageNumber, int pageSize, String sortBy, String sortDir)
@@ -54,8 +62,9 @@ public class PostService
         Pageable page = PageRequest.of(pageNumber, pageSize, sort);
         Page<Post> pagePost = postRepo.findAll(page);
         List<Post> posts = pagePost.getContent();
+        List<PostDto> postDtos = posts.stream().map((post) -> converter.postToDto(post)).collect(Collectors.toList());
         PostResponse response = new PostResponse();
-        response.setContent(posts);
+        response.setContent(postDtos);
         response.setPageNummber(pagePost.getNumber());
         response.setPageSize(pagePost.getSize());
         response.setTotalElements(pagePost.getNumberOfElements());
@@ -64,33 +73,44 @@ public class PostService
         return response;
     }
 
-    public List<Post> getPostsByCategory(int category_id)
+    public List<PostDto> getPostsByCategory(int category_id)
     {
         Category category = categoryRepo.findById(category_id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", category_id));
         List<Post> posts = postRepo.findByCategory(category);
-        return posts;
+        List<PostDto> postDtos = posts.stream().map((post) -> this.converter.postToDto(post)).collect(Collectors.toList());
+        return postDtos;
     }
 
-    public List<Post> getPostsByUser(int user_id)
+    public List<PostDto> getPostsByUser(int user_id)
     {
         User user = userRepo.findById(user_id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", user_id));
         List<Post> posts = postRepo.findByUser(user);
-        return posts;
+        List<PostDto> postDtos = posts.stream().map((post) -> this.converter.postToDto(post)).collect(Collectors.toList());
+        return postDtos;
     }
 
-    public Post updatePost(Post postNew, int id)
+    public List<PostDto> getPostsByTitleSearch(String keyword)
+    {
+        List<Post> posts = postRepo.findByTitleContaining(keyword);
+        List<PostDto> postDtos = posts.stream().map((post) -> this.converter.postToDto(post)).collect(Collectors.toList());
+        return postDtos;
+    }
+
+    public PostDto updatePost(PostDto postNew, int id)
     {
         Post post = postRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "Id", id));
         post.setTitle(postNew.getTitle());
         post.setContent(postNew.getContent());
         postRepo.save(post);
-        return post;
+        PostDto postDto = converter.postToDto(post);
+        return postDto;
     }
 
-    public Post deletePost(int id)
+    public PostDto deletePost(int id)
     {
         Post post = postRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "Id", id));
         postRepo.delete(post);
-        return post;
+        PostDto postDto = converter.postToDto(post);
+        return postDto;
     }
 }
