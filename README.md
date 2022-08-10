@@ -24,10 +24,10 @@ Technologies/Tools used :
 - Postman Rest Client
 - Swagger
 
-## Screenshots of demo
+## Screenshots
 
 ER Diagram
-![Screenshot_20220808_224314](https://user-images.githubusercontent.com/67866166/183475453-9c79820f-602e-4757-bf1d-7de0d567e929.png)
+![Screenshot_20220810_105302](https://user-images.githubusercontent.com/67866166/183822311-24d3845f-67f1-4c37-ac6c-fdfc7cb61948.png)
 
 All Api's
 ![ref - all api's](https://user-images.githubusercontent.com/67866166/183232231-c62b4784-e124-4c44-88fc-701872513672.png)
