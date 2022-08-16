@@ -30,7 +30,7 @@ ER Diagram
 ![Screenshot_20220810_105302](https://user-images.githubusercontent.com/67866166/183822311-24d3845f-67f1-4c37-ac6c-fdfc7cb61948.png)
 
 All Api's
-![ref - all api's](https://user-images.githubusercontent.com/67866166/183232231-c62b4784-e124-4c44-88fc-701872513672.png)
+![Screenshot_20220816_135157](https://user-images.githubusercontent.com/67866166/184833211-54362609-99b1-45a9-b685-ab3a4d9df9a6.png)
 
 Database - in MySQL Workbench
 
