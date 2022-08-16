@@ -10,9 +10,4 @@ public class BlogManagementApplication
 	{
 		SpringApplication.run(BlogManagementApplication.class, args);
 	}
-	// @Bean
-	// public ModelMapper mapper()
-	// {
-	// 	return new ModelMapper();
-	// }
 }

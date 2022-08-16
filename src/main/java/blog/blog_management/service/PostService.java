@@ -40,6 +40,7 @@ public class PostService
         post.setCategory(category);
         post.setUser(user);
         post.setDate(new Date());
+        // check if needed post=postRepo.save(post);
         postRepo.save(post);
         postDto = converter.postToDto(post);
         return postDto;
@@ -73,25 +74,25 @@ public class PostService
         return response;
     }
 
-    public List<PostDto> getPostsByCategory(int category_id)
+    public List<PostDto> getPostsByTitleSearch(String keyword)
     {
-        Category category = categoryRepo.findById(category_id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", category_id));
-        List<Post> posts = postRepo.findByCategory(category);
+        List<Post> posts = postRepo.findByTitleContaining(keyword);
         List<PostDto> postDtos = posts.stream().map((post) -> this.converter.postToDto(post)).collect(Collectors.toList());
         return postDtos;
     }
 
-    public List<PostDto> getPostsByUser(int user_id)
+    public List<PostDto> getPostsByUser(int userId)
     {
-        User user = userRepo.findById(user_id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", user_id));
+        User user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
         List<Post> posts = postRepo.findByUser(user);
         List<PostDto> postDtos = posts.stream().map((post) -> this.converter.postToDto(post)).collect(Collectors.toList());
         return postDtos;
     }
 
-    public List<PostDto> getPostsByTitleSearch(String keyword)
+    public List<PostDto> getPostsByCategory(int categoryId)
     {
-        List<Post> posts = postRepo.findByTitleContaining(keyword);
+        Category category = categoryRepo.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", categoryId));
+        List<Post> posts = postRepo.findByCategory(category);
         List<PostDto> postDtos = posts.stream().map((post) -> this.converter.postToDto(post)).collect(Collectors.toList());
         return postDtos;
     }

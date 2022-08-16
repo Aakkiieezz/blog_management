@@ -27,7 +27,7 @@ public class PostController
     @Autowired
     private PostService postService;
 
-    @PostMapping("/users/{userId}/categories/{categoryId}/posts/")
+    @PostMapping("/users/{userId}/categories/{categoryId}/posts")
     public ResponseEntity<?> createPost(@Valid @RequestBody PostDto postDtoNew, @PathVariable int userId, @PathVariable int categoryId)
     {
         PostDto postDto = postService.createPost(postDtoNew, userId, categoryId);
@@ -42,7 +42,7 @@ public class PostController
         return postDto;
     }
 
-    @GetMapping("/posts/")
+    @GetMapping("/posts")
     public PostResponse getPosts(@RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
@@ -52,10 +52,10 @@ public class PostController
         return response;
     }
 
-    @GetMapping("/categories/{categoryId}/posts")
-    public List<PostDto> getPostsByCategory(@PathVariable int categoryId)
+    @GetMapping("/posts/search/{keyword}")
+    public List<PostDto> getPostsByTitleSearch(@PathVariable String keyword)
     {
-        List<PostDto> postDtos = postService.getPostsByCategory(categoryId);
+        List<PostDto> postDtos = postService.getPostsByTitleSearch(keyword);
         return postDtos;
     }
 
@@ -66,10 +66,10 @@ public class PostController
         return postDtos;
     }
 
-    @GetMapping("/posts/search/{keyword}")
-    public List<PostDto> getPostsByTitleSearch(@PathVariable String keyword)
+    @GetMapping("/categories/{categoryId}/posts")
+    public List<PostDto> getPostsByCategory(@PathVariable int categoryId)
     {
-        List<PostDto> postDtos = postService.getPostsByTitleSearch(keyword);
+        List<PostDto> postDtos = postService.getPostsByCategory(categoryId);
         return postDtos;
     }
 

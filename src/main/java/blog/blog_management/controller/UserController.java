@@ -24,7 +24,7 @@ public class UserController
     @Autowired
     private UserService userService;
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDtoNew)
     {
         UserDto userDto = userService.createUser(userDtoNew);
@@ -39,7 +39,7 @@ public class UserController
         return userDto;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<UserDto> getUsers()
     {
         List<UserDto> userDtos = userService.getUsers();

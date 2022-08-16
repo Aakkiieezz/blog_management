@@ -24,7 +24,7 @@ public class CategoryController
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDto categoryDtoNew)
     {
         CategoryDto categoryDto = categoryService.createCategory(categoryDtoNew);
@@ -39,7 +39,7 @@ public class CategoryController
         return categoryDto;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<CategoryDto> getCategories()
     {
         List<CategoryDto> categoryDtos = categoryService.getCategories();

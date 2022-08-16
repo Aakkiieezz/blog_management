@@ -43,9 +43,9 @@ public class CategoryService
     public CategoryDto updateCategory(CategoryDto categoryDto, int id)
     {
         Category category = categoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", id));
-        categoryDto.setId(id);
-        category = converter.dtoToCategory(categoryDto);
+        category.setTitle(categoryDto.getTitle());
         categoryRepo.save(category);
+        categoryDto = converter.categoryToDto(category);
         return categoryDto;
     }
 

@@ -38,4 +38,6 @@ public class Post
     @JoinColumn(name = "category_id", nullable = false)
     @ManyToOne
     private Category category;
+    // @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    // private Set<Comment> comments = new HashSet<>();
 }
