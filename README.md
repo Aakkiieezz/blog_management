@@ -1,4 +1,4 @@
-# Blogging backend using SpringBoot + Hibernate + MySQL
+# Blog management using SpringBoot + Hibernate
 
 Things implemented/used :
 - 3 Layer architecture (Controller <--> Service <--> Repository[DAO])
