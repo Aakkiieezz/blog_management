@@ -32,8 +32,6 @@ ER Diagram
 All Api's
 ![Screenshot_20220816_135157](https://user-images.githubusercontent.com/67866166/184833211-54362609-99b1-45a9-b685-ab3a4d9df9a6.png)
 
-Database - in MySQL Workbench
-
 ## VSCode
 Extensions installed :
 - Spring Boot Extension Pack
@@ -41,18 +39,17 @@ Extensions installed :
 
 Steps through command pallete (Ctrl+Shift+p) :
 - Spring Initializr: Create a Maven Project
-- Specific Spring Boot version - 2.7.2
+- Specific Spring Boot version - 2.7.5
 - Specific project  language - Java
 - Input Group Id - blog
 - Artifact ID - blog_management
 - Specific packaging type - Jar
-- Specific Java version - 18
+- Specific Java version - 19
 - Search for dependencies (reflects in pom.xml file):
   - Spring Boot DevTools
   - Spring Data JPA
   - MySQL Driver
   - Spring Web
   - Validation
-  - Spring Security
-  - Lombok (modified - included version 1.18.24)
-  - ModelMapper (added externally version 3.1.0)
+  - Lombok
+  - ModelMapper (added externally)
